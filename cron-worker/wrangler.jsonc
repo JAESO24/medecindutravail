@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "santetravail-cron",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-04-26",
+  "triggers": {
+    "crons": ["0 7 * * *"]
+  },
+  "vars": {
+    "TARGET_URL": "https://santetravail.pages.dev"
+  }
+}

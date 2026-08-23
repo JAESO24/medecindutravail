@@ -1,0 +1,11 @@
+{
+  "name": "santetravail-cron",
+  "type": "module",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "cf-typegen": "wrangler types --env-interface Env"
+  },
+  "devDependencies": {
+    "wrangler": "^4.4.0"
+  }
+}

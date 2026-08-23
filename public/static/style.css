@@ -1,0 +1,954 @@
+/* SanteTravail.CI - Styles Personnalisés */
+
+:root {
+  --primary: #006B3C;       /* Vert Côte d'Ivoire */
+  --primary-dark: #004d2b;
+  --primary-light: #e8f5ee;
+  --secondary: #FF8C00;     /* Orange Côte d'Ivoire */
+  --secondary-light: #fff4e6;
+  --danger: #dc2626;
+  --warning: #f59e0b;
+  --success: #10b981;
+  --info: #3b82f6;
+  --sidebar-width: 260px;
+  /* Interface pensée uniquement en thème clair : empêche les navigateurs
+     mobiles (Samsung Internet, Chrome "Dark mode for web contents") de
+     ré-inverser automatiquement les couleurs et de casser les dégradés/
+     fonds blancs (ils tournent au noir plein sans cette déclaration). */
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+/* Empêche tout débordement horizontal de la page : la sidebar est en
+   position fixed, donc si html/body peut défiler horizontalement, le
+   contenu passe visuellement sous elle en scrollant. */
+html, body { max-width: 100%; overflow-x: hidden; }
+
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; }
+
+/* Login */
+.login-bg {
+  background: linear-gradient(135deg, #006B3C 0%, #004d2b 50%, #FF8C00 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login-card {
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+  width: 420px;
+  max-width: 95vw;
+}
+.login-logo {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.login-logo .logo-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #006B3C, #FF8C00);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: white;
+  margin-bottom: 1rem;
+  box-shadow: 0 8px 20px rgba(0,107,60,0.4);
+}
+.login-logo h1 { color: #006B3C; font-size: 1.5rem; font-weight: 700; margin: 0; }
+.login-logo p { color: #666; font-size: 0.85rem; margin: 0.25rem 0 0; }
+
+/* ============================================================
+   SIDEBAR — Style Fireart (dark #0F1322)
+   ============================================================ */
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  background: #0F1322;
+  color: white;
+  overflow-y: auto;
+  z-index: 100;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+.sidebar-header {
+  padding: 1.5rem 1.25rem 1.25rem;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  flex-shrink: 0;
+}
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.sidebar-logo .logo-icon {
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, #006B3C, #10b981);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 12px rgba(0,107,60,0.4);
+}
+.sidebar-logo h2 { font-size: 0.95rem; font-weight: 700; margin: 0; line-height: 1.2; color: white; }
+.sidebar-logo span { font-size: 0.65rem; color: rgba(255,255,255,0.45); }
+.sidebar-user {
+  padding: 0.875rem 1.25rem;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  flex-shrink: 0;
+}
+.sidebar-user .user-avatar {
+  width: 34px; height: 34px;
+  background: linear-gradient(135deg, #FF8C00, #ffb347);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+.sidebar-nav { padding: 0.5rem 0; flex: 1; }
+.nav-section {
+  padding: 1rem 1.25rem 0.3rem;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.3);
+  font-weight: 600;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 0.7rem;
+  padding: 0.6rem 1.1rem 0.6rem 1.25rem;
+  cursor: pointer;
+  transition: all 0.18s;
+  font-size: 0.835rem;
+  color: rgba(255,255,255,0.55);
+  border-radius: 0;
+  margin: 1px 0.75rem;
+  border-radius: 8px;
+  position: relative;
+}
+.nav-item:hover {
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.9);
+}
+.nav-item.active {
+  background: rgba(24,94,240,0.18);
+  color: #60a5fa;
+  font-weight: 600;
+}
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 25%; bottom: 25%;
+  width: 3px;
+  background: #185EF0;
+  border-radius: 0 3px 3px 0;
+  margin-left: -0.75rem;
+}
+.nav-item i {
+  width: 18px; text-align: center;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+.nav-badge {
+  margin-left: auto;
+  background: #FF8C00;
+  color: white;
+  font-size: 0.6rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: 10px;
+  font-weight: 700;
+}
+/* Mobile app banner au bas de la sidebar */
+.sidebar-bottom-banner {
+  margin: 0.75rem;
+  padding: 0.875rem 1rem;
+  background: linear-gradient(135deg, #185EF0, #4f46e5);
+  border-radius: 12px;
+  font-size: 0.75rem;
+  color: white;
+  flex-shrink: 0;
+}
+.sidebar-bottom-banner .banner-icon { font-size: 1.5rem; margin-bottom: 0.35rem; }
+.sidebar-bottom-banner p { margin: 0; opacity: 0.85; font-size: 0.7rem; line-height: 1.4; }
+
+/* ============================================================
+   MAIN LAYOUT — fond gris clair Fireart
+   ============================================================ */
+.main-layout {
+  margin-left: var(--sidebar-width);
+  min-height: 100vh;
+  max-width: calc(100% - var(--sidebar-width));
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #F4F7FC;
+}
+.topbar {
+  background: white;
+  border-bottom: 1px solid #eef0f5;
+  padding: 0.75rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+/* Topbar page title */
+.topbar-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #111827;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.topbar-title small {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #9ca3af;
+  margin-left: 0.25rem;
+}
+/* Topbar right actions */
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.topbar-icon-btn {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: #f4f7fc;
+  border: 1px solid #eef0f5;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: #6b7280;
+  transition: all 0.18s;
+  position: relative;
+}
+.topbar-icon-btn:hover { background: #e9edf5; color: #374151; }
+.topbar-icon-btn .notif-dot {
+  position: absolute;
+  top: 5px; right: 5px;
+  width: 8px; height: 8px;
+  background: #ef4444;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+.topbar-user {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.35rem 0.75rem 0.35rem 0.35rem;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px solid #eef0f5;
+  background: white;
+  transition: all 0.18s;
+}
+.topbar-user:hover { background: #f4f7fc; }
+.topbar-user-avatar {
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #006B3C, #10b981);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem;
+  color: white;
+  font-weight: 700;
+}
+.content { padding: 1.5rem 1.75rem; flex: 1; }
+
+/* ============================================================
+   STAT CARDS — style Fireart (fond blanc, icône colorée)
+   ============================================================ */
+.stat-card {
+  background: white;
+  border-radius: 16px;
+  padding: 1.35rem 1.4rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.stat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.10); }
+.stat-card.green .stat-icon  { background: #d1fae5; color: #006B3C; }
+.stat-card.orange .stat-icon { background: #ffedd5; color: #FF8C00; }
+.stat-card.blue .stat-icon   { background: #dbeafe; color: #185EF0; }
+.stat-card.red .stat-icon    { background: #fee2e2; color: #ef4444; }
+.stat-card.purple .stat-icon { background: #ede9fe; color: #7c3aed; }
+.stat-value { font-size: 2.1rem; font-weight: 800; color: #111827; line-height: 1; margin: 0.6rem 0 0.2rem; }
+.stat-label { color: #6b7280; font-size: 0.8rem; font-weight: 500; }
+.stat-trend {
+  font-size: 0.72rem;
+  margin-top: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.stat-trend.up   { color: #10b981; }
+.stat-trend.down { color: #ef4444; }
+.stat-icon {
+  width: 46px; height: 46px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+/* Tables */
+.data-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.data-table th { background: #f9fafb; padding: 0.75rem 1rem; text-align: left; font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #e5e7eb; }
+.data-table td { padding: 0.875rem 1rem; border-bottom: 1px solid #f3f4f6; color: #374151; }
+.data-table tr:hover td { background: #f9fafb; }
+.data-table tr:last-child td { border-bottom: none; }
+
+/* Badges */
+.badge {
+  display: inline-flex; align-items: center; gap: 0.25rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.badge-green { background: #d1fae5; color: #065f46; }
+.badge-orange { background: #ffedd5; color: #9a3412; }
+.badge-blue { background: #dbeafe; color: #1e40af; }
+.badge-red { background: #fee2e2; color: #991b1b; }
+.badge-yellow { background: #fef9c3; color: #713f12; }
+.badge-gray { background: #f3f4f6; color: #374151; }
+.badge-purple { background: #ede9fe; color: #5b21b6; }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-primary { background: #006B3C; color: white; }
+.btn-primary:hover:not(:disabled) { background: #004d2b; }
+.btn-secondary { background: #FF8C00; color: white; }
+.btn-secondary:hover:not(:disabled) { background: #e07800; }
+.btn-outline { background: white; border: 1.5px solid #d1d5db; color: #374151; }
+.btn-outline:hover:not(:disabled) { background: #f9fafb; border-color: #9ca3af; }
+.btn-danger { background: #ef4444; color: white; }
+.btn-danger:hover:not(:disabled) { background: #dc2626; }
+.btn-sm { padding: 0.3rem 0.65rem; font-size: 0.8rem; border-radius: 6px; }
+.btn-icon { padding: 0.4rem 0.4rem; }
+
+/* Forms */
+.form-group { margin-bottom: 1rem; }
+.form-label { display: block; font-size: 0.8rem; font-weight: 600; color: #374151; margin-bottom: 0.35rem; }
+.form-input {
+  width: 100%;
+  padding: 0.6rem 0.875rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #111;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: white;
+}
+.form-input:focus { outline: none; border-color: #006B3C; box-shadow: 0 0 0 3px rgba(0,107,60,0.1); }
+.form-input:disabled { background: #f9fafb; color: #6b7280; }
+select.form-input { cursor: pointer; }
+textarea.form-input { resize: vertical; min-height: 80px; }
+
+/* Modal */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.modal {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  max-height: 92vh;
+  overflow-y: auto;
+  width: 100%;
+}
+.modal-sm { max-width: 480px; }
+.modal-md { max-width: 640px; }
+.modal-lg { max-width: 860px; }
+.modal-xl { max-width: 1100px; }
+.modal-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky; top: 0;
+  background: white;
+  z-index: 10;
+  border-radius: 16px 16px 0 0;
+}
+.modal-header h3 { font-size: 1rem; font-weight: 700; color: #111; margin: 0; display: flex; align-items: center; gap: 0.5rem; }
+.modal-body { padding: 1.5rem; }
+.modal-footer { padding: 1rem 1.5rem; border-top: 1px solid #e5e7eb; display: flex; justify-content: flex-end; gap: 0.75rem; }
+
+/* Card */
+.card { background: white; border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); border: none; }
+.card-header { padding: 1rem 1.35rem; border-bottom: 1px solid #f3f4f6; display: flex; align-items: center; justify-content: space-between; }
+.card-header h3 { font-size: 0.9rem; font-weight: 700; color: #111827; margin: 0; display: flex; align-items: center; gap: 0.5rem; }
+.card-body { padding: 1.25rem; }
+
+/* Search */
+.search-box {
+  position: relative;
+}
+.search-box input { padding-left: 2.25rem; }
+.search-box i { position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: #9ca3af; font-size: 0.875rem; }
+
+/* Aptitude colors */
+.aptitude-apte { color: #065f46; background: #d1fae5; }
+.aptitude-apte_amenagement { color: #1e40af; background: #dbeafe; }
+.aptitude-apte_temporaire { color: #713f12; background: #fef9c3; }
+.aptitude-inapte_temporaire { color: #9a3412; background: #ffedd5; }
+.aptitude-inapte_definitif { color: #991b1b; background: #fee2e2; }
+
+/* Priority colors */
+.priority-urgente { background: #fee2e2; color: #991b1b; border-left: 3px solid #dc2626; }
+.priority-haute { background: #ffedd5; color: #9a3412; border-left: 3px solid #f97316; }
+.priority-normale { background: #dbeafe; color: #1e40af; border-left: 3px solid #3b82f6; }
+.priority-basse { background: #f3f4f6; color: #6b7280; border-left: 3px solid #9ca3af; }
+
+/* Tabs */
+.tabs { display: flex; flex-wrap: wrap; border-bottom: 2px solid #e5e7eb; gap: 0; margin-bottom: 1.25rem; }
+.tab-btn {
+  padding: 0.65rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: #6b7280;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s;
+  background: none;
+  border-top: none; border-left: none; border-right: none;
+  display: flex; align-items: center; gap: 0.35rem;
+}
+.tab-btn:hover { color: #006B3C; }
+.tab-btn.active { color: #006B3C; border-bottom-color: #006B3C; font-weight: 600; }
+
+/* Avatar */
+.avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 700;
+  flex-shrink: 0;
+}
+.avatar-green { background: #d1fae5; color: #065f46; }
+.avatar-blue { background: #dbeafe; color: #1e40af; }
+.avatar-orange { background: #ffedd5; color: #9a3412; }
+.avatar-purple { background: #ede9fe; color: #5b21b6; }
+
+/* Loading */
+.spinner {
+  width: 32px; height: 32px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #006B3C;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Toast */
+.toast-container {
+  position: fixed; bottom: 1.5rem; right: 1.5rem;
+  z-index: 9999; display: flex; flex-direction: column; gap: 0.5rem;
+}
+.toast {
+  background: white;
+  border-radius: 10px;
+  padding: 0.875rem 1.25rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  min-width: 280px;
+  display: flex; align-items: center; gap: 0.75rem;
+  border-left: 4px solid;
+  animation: slideInRight 0.3s ease;
+  font-size: 0.875rem;
+}
+.toast-success { border-left-color: #10b981; }
+.toast-error { border-left-color: #ef4444; }
+.toast-warning { border-left-color: #f59e0b; }
+.toast-info { border-left-color: #3b82f6; }
+@keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+/* Timeline */
+.timeline { position: relative; padding-left: 1.5rem; }
+.timeline::before { content: ''; position: absolute; left: 0.5rem; top: 0; bottom: 0; width: 2px; background: #e5e7eb; }
+.timeline-item { position: relative; margin-bottom: 1.25rem; }
+.timeline-dot {
+  position: absolute; left: -1rem; top: 0.125rem;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 0 2px #e5e7eb;
+}
+.timeline-dot.green { background: #006B3C; }
+.timeline-dot.orange { background: #FF8C00; }
+.timeline-dot.blue { background: #3b82f6; }
+.timeline-dot.red { background: #ef4444; }
+.timeline-content { background: #f9fafb; border-radius: 8px; padding: 0.75rem 1rem; border: 1px solid #f0f0f0; }
+
+/* ============================================================
+   DASHBOARD WELCOME BANNER
+   ============================================================ */
+.dash-welcome {
+  background: linear-gradient(135deg, #185EF0 0%, #4338ca 60%, #1e1b4b 100%);
+  border-radius: 16px;
+  padding: 1.5rem 2rem;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  position: relative;
+  overflow: hidden;
+}
+.dash-welcome::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 200px; height: 200px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 50%;
+}
+.dash-welcome::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; right: 60px;
+  width: 160px; height: 160px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 50%;
+}
+.dash-welcome h2 { font-size: 1.3rem; font-weight: 700; margin: 0 0 0.3rem; }
+.dash-welcome p  { font-size: 0.82rem; margin: 0; opacity: 0.8; }
+.dash-welcome .badge-pill {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  background: rgba(255,255,255,0.18);
+  border-radius: 999px;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin-top: 0.6rem;
+}
+.dash-welcome-icon {
+  font-size: 4rem;
+  opacity: 0.25;
+  position: absolute;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* ============================================================
+   WORKLOAD / ACTIVITY CHART SECTION
+   ============================================================ */
+.workload-bar-wrap {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 80px;
+}
+.workload-bar {
+  flex: 1;
+  border-radius: 4px 4px 0 0;
+  min-width: 14px;
+  transition: opacity 0.2s;
+}
+.workload-bar:hover { opacity: 0.8; }
+
+/* ============================================================
+   SCHEDULE / PLANNING CARD
+   ============================================================ */
+.schedule-item {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  padding: 0.75rem;
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+  transition: background 0.18s;
+  cursor: pointer;
+}
+.schedule-item:hover { background: #f4f7fc; }
+.schedule-time {
+  font-size: 0.72rem;
+  color: #9ca3af;
+  white-space: nowrap;
+  padding-top: 2px;
+  min-width: 45px;
+}
+.schedule-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.schedule-content .title { font-size: 0.83rem; font-weight: 600; color: #111827; }
+.schedule-content .sub   { font-size: 0.74rem; color: #9ca3af; margin-top: 1px; }
+
+/* ============================================================
+   REMINDER / ALERT ITEMS
+   ============================================================ */
+.reminder-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.5rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+.reminder-item:last-child { border-bottom: none; }
+.reminder-priority {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  flex-shrink: 0;
+  text-transform: uppercase;
+}
+.rp-high   { background: #fee2e2; color: #991b1b; }
+.rp-medium { background: #ffedd5; color: #9a3412; }
+.rp-low    { background: #d1fae5; color: #065f46; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  /* La sidebar est cachée (transform), donc le contenu ne doit plus lui
+     réserver de place : sans ce reset, max-width restait plafonné à
+     (100% - 260px) alors que margin-left seul était remis à 0. */
+  .main-layout { margin-left: 0; max-width: 100%; }
+  .stat-card .stat-value { font-size: 1.5rem; }
+  .dash-welcome { padding: 1.2rem; }
+  .dash-welcome h2 { font-size: 1.05rem; }
+}
+
+/* Page transition */
+.page { animation: fadeIn 0.2s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
+
+/* Empty state */
+.empty-state { text-align: center; padding: 3rem 1rem; }
+.empty-state i { font-size: 3rem; color: #d1d5db; margin-bottom: 1rem; display: block; }
+.empty-state h3 { color: #6b7280; font-size: 1rem; margin: 0 0 0.5rem; }
+.empty-state p { color: #9ca3af; font-size: 0.875rem; margin: 0; }
+
+/* Section header */
+.section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+.section-header h2 { font-size: 1.25rem; font-weight: 700; color: #111; margin: 0; display: flex; align-items: center; gap: 0.5rem; }
+
+/* Grid */
+/* minmax(0, 1fr) plutôt que 1fr : force des colonnes de largeur égale qui
+   peuvent rétrécir sous la largeur naturelle de leur contenu (sinon un nom
+   d'entreprise long, par ex., pousse la grille en dehors du conteneur). */
+.grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+@media (max-width: 1024px) { .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 768px) { .grid-2, .grid-3, .grid-4 { grid-template-columns: minmax(0, 1fr); } }
+
+/* Divider */
+.divider { border: none; border-top: 1px solid #f0f0f0; margin: 1rem 0; }
+
+/* Info row */
+.info-row { display: flex; padding: 0.5rem 0; border-bottom: 1px solid #f9fafb; font-size: 0.875rem; }
+.info-row:last-child { border-bottom: none; }
+.info-label { font-weight: 600; color: #6b7280; width: 40%; flex-shrink: 0; }
+.info-value { color: #111; }
+
+/* Calendar */
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+.calendar-day { min-height: 80px; background: #f9fafb; border-radius: 6px; padding: 4px; border: 1px solid #f0f0f0; }
+.calendar-day.today { border-color: #006B3C; background: #e8f5ee; }
+.calendar-day.other-month { opacity: 0.4; }
+.calendar-day-num { font-size: 0.75rem; font-weight: 600; color: #374151; }
+.calendar-event {
+  font-size: 0.65rem; padding: 1px 4px; border-radius: 3px; margin-top: 2px;
+  cursor: pointer; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+}
+
+/* Vitals chart */
+.vitals-item { background: #f9fafb; border-radius: 8px; padding: 0.75rem; text-align: center; border: 1px solid #f0f0f0; }
+.vitals-value { font-size: 1.5rem; font-weight: 800; color: #111; }
+.vitals-unit { font-size: 0.7rem; color: #6b7280; }
+.vitals-label { font-size: 0.75rem; color: #6b7280; margin-top: 0.2rem; }
+.vitals-status { font-size: 0.65rem; margin-top: 0.2rem; font-weight: 600; }
+
+/* Dossier médical */
+.dossier-section { border-left: 3px solid #006B3C; padding-left: 1rem; margin-bottom: 1.5rem; }
+.dossier-section h4 { font-size: 0.875rem; font-weight: 700; color: #006B3C; margin: 0 0 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* Print */
+@media print {
+  .sidebar, .topbar, .btn, .modal-overlay { display: none !important; }
+  .main-layout { margin-left: 0; max-width: 100%; }
+  .content { padding: 0; }
+}
+
+/* ============================================================
+   UTILITAIRES — Remplacement CDN Tailwind (classes utilisées)
+   ============================================================ */
+
+/* Spacing */
+.p-3  { padding: 0.75rem; }
+.p-4  { padding: 1rem; }
+.py-5 { padding-top: 1.25rem; padding-bottom: 1.25rem; }
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-3 { margin-top: 0.75rem; }
+.mt-4 { margin-top: 1rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 0.75rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mr-1 { margin-right: 0.25rem; }
+.ml-1 { margin-left: 0.25rem; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+.gap-4  { gap: 1rem; }
+
+/* Display */
+.hidden  { display: none !important; }
+.block   { display: block; }
+.flex    { display: flex; }
+.inline  { display: inline; }
+.inline-block { display: inline-block; }
+
+/* Flex helpers */
+.justify-center  { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.items-center    { align-items: center; }
+.items-start     { align-items: flex-start; }
+.flex-1          { flex: 1 1 0%; }
+.flex-wrap       { flex-wrap: wrap; }
+.flex-shrink-0   { flex-shrink: 0; }
+
+/* Sizing */
+.w-full    { width: 100%; }
+.min-w-0   { min-width: 0; }
+.max-w-4xl { max-width: 56rem; }
+
+/* Typography */
+.text-sm    { font-size: 0.875rem; line-height: 1.25rem; }
+.text-xs    { font-size: 0.75rem; line-height: 1rem; }
+.font-600   { font-weight: 600; }
+.text-red-600    { color: #dc2626; }
+.text-gray-500   { color: #6b7280; }
+.text-gray-700   { color: #374151; }
+.text-green-700  { color: #15803d; }
+
+/* Borders */
+.border-b { border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #e5e7eb; }
+.rounded-lg { border-radius: 0.5rem; }
+
+/* Cursor */
+.cursor-pointer { cursor: pointer; }
+
+/* Overflow */
+.overflow-hidden { overflow: hidden; }
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.whitespace-nowrap { white-space: nowrap; }
+
+/* Hover utilities (used inline via style=) */
+.hover\:bg-gray-50:hover { background-color: #f9fafb; }
+
+/* ============================================================
+   RESPONSIVE AMÉLIORÉ — mobile & tablette
+   ============================================================ */
+
+/* Le bouton hamburger devient visible sur mobile (il est display:none inline) */
+@media (max-width: 768px) {
+  #menu-btn { display: flex !important; }
+
+  /* Fond assombri derrière la sidebar ouverte */
+  .sidebar-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 99;
+    animation: fadeIn 0.2s ease;
+  }
+
+  /* Topbar compacte */
+  .topbar { padding: 0.5rem 0.75rem; gap: 0.5rem; }
+  .topbar-title { font-size: 0.95rem; }
+  .topbar-title small { display: none; }
+  .topbar-user span, .topbar-user small { display: none; } /* on garde l'avatar */
+
+  /* Contenu : marges réduites */
+  .page, .main-layout > div { padding-left: 0.75rem; padding-right: 0.75rem; }
+
+  /* Tableaux : défilement horizontal au lieu de déborder */
+  .data-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+  .data-table th, .data-table td { padding: 0.6rem 0.75rem; }
+
+  /* En-têtes de section : empilés, boutons pleine largeur */
+  .section-header { flex-direction: column; align-items: stretch; gap: 0.75rem; }
+  .section-header .btn, .section-header button { width: 100%; justify-content: center; }
+
+  /* Modales : plein écran confortable */
+  .modal-overlay { padding: 0; align-items: flex-end; }
+  .modal {
+    max-height: 96vh;
+    border-radius: 16px 16px 0 0;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .modal-header, .modal > div { padding-left: 1rem; padding-right: 1rem; }
+
+  /* Cibles tactiles plus grandes dans la navigation */
+  .nav-item { padding-top: 0.8rem; padding-bottom: 0.8rem; font-size: 0.9rem; }
+
+  /* Filtres (select/input avec largeur fixe en px dans les en-têtes de page) :
+     passent en pleine largeur au lieu de rester ratatinés dans la colonne empilée */
+  .section-header select[style*="width"],
+  .section-header input[style*="width"],
+  .section-header .search-box[style*="width"] {
+    width: 100% !important;
+  }
+}
+
+/* Empêche le zoom automatique iOS sur les champs (police >= 16px) */
+@media (max-width: 768px) {
+  input, select, textarea { font-size: 16px !important; }
+}
+
+/* Très petits écrans */
+@media (max-width: 480px) {
+  .stat-card .stat-value { font-size: 1.25rem; }
+  .grid-2, .grid-3, .grid-4 { gap: 0.6rem; }
+  .login-card { padding: 1.5rem; }
+}
+
+/* Tablettes : sidebar visible mais contenu aéré */
+@media (min-width: 769px) and (max-width: 1024px) {
+  :root { --sidebar-width: 220px; }
+}
+
+/* ============================================================
+   RESPONSIVE v2 — neutralise les grilles en style inline
+   Les blocs du dashboard utilisent style="grid-template-columns:..."
+   qu'une media query ne peut surpasser sans !important.
+   ============================================================ */
+@media screen and (max-width: 768px) {
+  /* Toute grille inline passe en 1 colonne… */
+  [style*="grid-template-columns"]:not([style*="repeat(7"]) {
+    grid-template-columns: 1fr !important;
+  }
+  /* …sauf le mini-calendrier hebdo (7 jours) qui reste en ligne */
+
+  /* Les petites paires label/valeur peuvent rester en 2 colonnes */
+  .info-grid { grid-template-columns: 1fr 1fr !important; }
+}
+
+/* Tablette : le dashboard 1.7fr/1fr devient 1 colonne aussi sous 1024px
+   (le panneau Semaine passe dessous, plus lisible) */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  [style*="grid-template-columns:1.7fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE v3 — topbar mobile & anti-débordement horizontal
+   ============================================================ */
+@media screen and (max-width: 768px) {
+
+  /* Médias fluides */
+  canvas, img, svg, video { max-width: 100%; height: auto; }
+
+  /* --- Topbar : passe sur 2 lignes ---
+     Ligne 1 : menu + titre + cloche + avatar
+     Ligne 2 : recherche pleine largeur */
+  .topbar { padding: 0.5rem 0.75rem; }
+  .topbar-actions {
+    flex: 1;
+    min-width: 0;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+  .search-box[style] {
+    width: 100% !important;
+    flex: 1 1 100%;
+    order: 10;              /* la recherche descend sous les icônes */
+  }
+  .search-box input { width: 100%; }
+
+  /* Carte utilisateur : avatar seul (le nom/rôle sont des div imbriquées) */
+  .topbar-user > div:last-child { display: none; }
+  .topbar-user { padding: 0.25rem; gap: 0; }
+
+  /* Résultats de recherche : ancrés aux bords de l'écran */
+  #search-results {
+    left: 0.75rem !important;
+    right: 0.75rem !important;
+    width: auto !important;
+    top: 105px !important;   /* sous la topbar 2 lignes */
+  }
+
+  /* Contenu principal : marges réduites */
+  .content { padding: 0.75rem; }
+}
+
+/* ============================================================
+   RESPONSIVE v4 — les cartes ne débordent plus de l'écran
+   Par défaut, un enfant de grille CSS refuse de rétrécir sous la
+   largeur de son contenu (min-width:auto). On l'autorise à rétrécir.
+   ============================================================ */
+@media screen and (max-width: 768px) {
+
+  /* Tout enfant direct d'une grille inline peut rétrécir */
+  [style*="grid-template-columns"] > * { min-width: 0; }
+
+  /* Les cartes ne dépassent jamais l'écran */
+  .card { max-width: 100%; min-width: 0; }
+
+  /* Textes d'alertes : au lieu d'être tronqués/coupés,
+     ils passent à la ligne (plus lisible sur mobile) */
+  .reminder-item div[style*="white-space:nowrap"] {
+    white-space: normal !important;
+  }
+  .reminder-item { align-items: flex-start; }
+
+  /* Les éléments flex aussi peuvent rétrécir (même problème que grid) */
+  .card-body > div[style*="display:flex"] > * { min-width: 0; }
+}
