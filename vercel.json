@@ -1,0 +1,11 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite",
+  "nodeVersion": "18.x",
+  "env": {
+    "GMAIL_USER": "@GMAIL_USER",
+    "GMAIL_APP_PASSWORD": "@GMAIL_APP_PASSWORD",
+    "CRON_SECRET": "@CRON_SECRET"
+  }
+}
