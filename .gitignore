@@ -1,6 +1,9 @@
 # prod
 dist/
 
+# build statique Vercel (hybride)
+.vercel-output/
+
 # dev
 .yarn/
 !.yarn/releases

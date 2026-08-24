@@ -174,6 +174,14 @@ const Toast = {
 // API
 // ============================================================
 const API = {
+  // URL racine de l'API. Sur Cloudflare Pages (même origine) => '' (relatif /api).
+  // Sur Vercel (frontend hébergé séparément) : window.SANTETRAVAIL_API_BASE est
+  // injectée par index.html au moment du build (voir build-vercel.mjs).
+  _base() {
+    return (typeof window !== 'undefined' && window.SANTETRAVAIL_API_BASE)
+      ? window.SANTETRAVAIL_API_BASE
+      : ''
+  },
   _headers() {
     const h = { 'Content-Type': 'application/json' }
     const token = localStorage.getItem('st_token')
@@ -181,19 +189,23 @@ const API = {
     return h
   },
   async get(path) {
-    const res = await axios.get(`/api${path}`, { headers: this._headers() })
+    const base = this._base()
+    const res = await axios.get(`${base}/api${path}`, { headers: this._headers() })
     return res.data
   },
   async post(path, data) {
-    const res = await axios.post(`/api${path}`, data, { headers: this._headers() })
+    const base = this._base()
+    const res = await axios.post(`${base}/api${path}`, data, { headers: this._headers() })
     return res.data
   },
   async put(path, data) {
-    const res = await axios.put(`/api${path}`, data, { headers: this._headers() })
+    const base = this._base()
+    const res = await axios.put(`${base}/api${path}`, data, { headers: this._headers() })
     return res.data
   },
   async delete(path) {
-    const res = await axios.delete(`/api${path}`, { headers: this._headers() })
+    const base = this._base()
+    const res = await axios.delete(`${base}/api${path}`, { headers: this._headers() })
     return res.data
   }
 }

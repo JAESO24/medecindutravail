@@ -95,7 +95,7 @@ npm run build
 pm2 start ecosystem.config.cjs
 ```
 
-### Production (Cloudflare Pages)
+### Production (Cloudflare Pages) — Backend API + base D1
 ```bash
 # 1. Créer la DB D1
 npx wrangler d1 create santetravail-production
@@ -104,9 +104,22 @@ npx wrangler d1 create santetravail-production
 npm run deploy
 ```
 
+### Frontend sur Vercel (stratégie hybride)
+Le frontend (fichiers statiques) peut être déployé séparément sur **Vercel**
+pendant que l'API reste sur Cloudflare. Cf. `VERCEL_SETUP.md`.
+
+```bash
+# Générer le build statique Vercel (copie public/ + crée index.html)
+node build-vercel.mjs
+```
+
+La variable d'environnement `SANTETRAVAIL_API_BASE` (URL de l'API Cloudflare)
+doit être définie dans le projet Vercel pour que le frontend appelle la bonne API.
+
 ## URL Application
 - **Local** : http://localhost:3000
-- **Plateforme** : Cloudflare Pages
+- **Plateforme backend/API** : Cloudflare Pages
+- **Plateforme frontend (optionnel)** : Vercel (`.vercel.app` ou domaine perso)
 
 ## Prochaines Améliorations
 - [ ] Export PDF des dossiers médicaux et ordonnances

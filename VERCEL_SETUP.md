@@ -1,71 +1,78 @@
-# Configuration Vercel
+# Configuration Vercel — Stratégie Hybride ✅
 
-## ⚠️ Limitation importante : Base de données D1
+Cette stratégie a été **mise en place** dans le projet (choix : Option A Hybride).
 
-Votre projet utilise **Cloudflare D1**, qui n'est pas compatible avec Vercel. Vous avez 3 options :
-
-### Option A : Hybrid (Recommandé pour maintenant)
-- **Frontend** : Déployer sur Vercel ✅
-- **Backend/API** : Rester sur Cloudflare Workers ✅
-- **Database** : Rester sur Cloudflare D1 ✅
-
-**Avantages** : Pas de changement, tout fonctionne
-**Inconvénients** : Dois configurer les 2 déploiements
-
-### Option B : Vercel + Base de données externe
-- Migrer de D1 vers PostgreSQL/MySQL
-- Déployer tout sur Vercel
-- Les variables d'env pour DB à ajouter
-
-### Option C : Vercel seulement (Frontend)
-- Déployer juste le frontend sur Vercel
-- Garder l'API sur Cloudflare
-
-## Setup actuel
-
-✅ `vercel.json` créé
-✅ `vite.config.ts` adapté pour Vercel
-✅ `api/health.ts` créé (test endpoint)
-
-## Prochaines étapes
-
-### 1. Configurer les variables d'environnement sur Vercel
-Allez sur : https://vercel.com/dashboard → Sélectionnez le projet → Settings → Environment Variables
-
-Ajoutez :
+## Architecture
 ```
-GMAIL_USER = santetravail1@gmail.com
-GMAIL_APP_PASSWORD = wzkciwsxkeyumjlz
-CRON_SECRET = a7ee5835ae71fe9e8671fe9afd4ab8e75979314e15801c78
+Navigateur ──▶  Vercel (frontend statique)      ──▶  Cloudflare Workers (API + D1)
+                    ▲  index.html + /static/*            ▲
+                    └── window.SANTETRAVAIL_API_BASE = https://…  (injecté au build)
 ```
 
-### 2. Déployer sur Vercel
+- **Frontend** : hébergé sur **Vercel** (fichiers statiques, SPA vanilla).
+- **Backend API + base D1** : **inchangés** sur **Cloudflare Workers/Pages**.
+- Le frontend pointe vers l'API Cloudflare via `SANTETRAVAIL_API_BASE`.
+- Le CORS est déjà ouvert côté Cloudflare (`app.use('/api/*', cors())`).
+
+## Fichiers ajoutés / modifiés
+| Fichier | Rôle |
+|---|---|
+| `vercel.json` | Config du build Vercel (buildCommand + outputDirectory `.vercel-output`) |
+| `build-vercel.mjs` | Build statique : copie `public/` → `.vercel-output/` + génère `index.html` avec l'URL API injectée |
+| `public/static/app.js` | Les appels API utilisent `window.SANTETRAVAIL_API_BASE` (fallback `/api` même origine) |
+| `.gitignore` | `.vercel-output/` ignoré (généré) |
+| `package.json` | Script `build:vercel` ajouté |
+
+## Déploiement pas-à-pas
+
+### 1. Obtenir l'URL de l'API Cloudflare (celle déjà en production)
+Ton domaine (confirmé fonctionnel) : **`https://santetravail.pages.dev`**
+(visible aussi dans `cron-worker/wrangler.jsonc` → `TARGET_URL`, et testable via
+`https://santetravail.pages.dev/api/health`).
+
+### 2. Importer le dépôt Git sur Vercel
+- Le projet est déjà un dépôt Git (`git status` fonctionne).
+- Dashboard Vercel → **Add New → Project → Import**.
+- Vercel détecte `vercel.json` (pas de framework Next.js → déploiement statique).
+
+### 3. Définir la variable `SANTETRAVAIL_API_BASE`
+Project → **Settings → Environment Variables**, ajouter :
+```
+SANTETRAVAIL_API_BASE = https://santetravail.pages.dev
+```
+Cette variable est lue **au moment du build** par `build-vercel.mjs` et injectée
+dans `index.html` (`window.SANTETRAVAIL_API_BASE`).
+
+> ⚠️ Sans cette variable, l'URL API reste `/api` (même origine) : correct uniquement
+> si le frontend et l'API sont sur le **même** domaine (cas Cloudflare).
+
+### 4. Déployer
+Sur **chaque push** sur la branche liée, Vercel :
+1. Installe les dépendances (`npm install`).
+2. Exécute le `buildCommand` (`node build-vercel.mjs`).
+3. Publie le contenu de `outputDirectory` (`.vercel-output/`).
+
+Ou avec le CLI :
 ```bash
-npm install -g vercel
-vercel
+npx vercel
 ```
 
-### 3. Pour l'API complète
-Si vous choisissez l'Option A (Hybrid) :
-- Gardez le déploiement Cloudflare comme avant
-- Le frontend sera sur Vercel
-- À configurer : proxy les appels /api/* vers Cloudflare
-
-## Commandes utiles
-
+## Test en local
 ```bash
-# Test build local
-npm run build
-
-# Preview local
-npm run preview
+node build-vercel.mjs
+# puis servir le dossier .vercel-output (ex. : npx serve, lancement d'un server statique)
 ```
 
-## Configuration CORS
-
-Le frontend Vercel aura une URL différente (ex: `monsite.vercel.app`). 
-À mettre à jour sur Cloudflare ou dans `.env`.
+## ⚠️ Points d'attention
+1. **CORS** : l'API Cloudflare permet déjà le cross-origin (`app.use('/api/*', cors())`).
+   Si vous ajoutez un domaine personnalisé Vercel, vérifiez qu'il n'est pas bloqué.
+2. **`npm run build`** (vite → worker CF) reste le build du **Cloudflare** et n'est plus
+   utilisé par Vercel.
+3. Les fichiers **`.vercel-output/`** sont régénérés à chaque build (jamais committer manuellement).
+4. Backend Cloudflare et frontend Vercel doivent être **déployés indépendamment**.
 
 ---
 
-**Quelle option choisissez-vous ?**
+## Rappel des autres options (non retenues)
+- **Option B** : tout sur Vercel (migrer D1 → PostgreSQL) — gros chantier.
+- **Option C** : Vercel seulement en frontend, typique de l'Option A.

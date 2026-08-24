@@ -1,10 +1,5 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "framework": "vite",
-  "env": {
-    "GMAIL_USER": "@GMAIL_USER",
-    "GMAIL_APP_PASSWORD": "@GMAIL_APP_PASSWORD",
-    "CRON_SECRET": "@CRON_SECRET"
-  }
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "node build-vercel.mjs",
+  "outputDirectory": ".vercel-output"
 }
