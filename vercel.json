@@ -1,5 +1,11 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "node build-vercel.mjs",
-  "outputDirectory": ".vercel-output"
+  "outputDirectory": ".vercel-output",
+  "env": {
+    "SANTETRAVAIL_API_BASE": "@SANTETRAVAIL_API_BASE",
+    "GMAIL_USER": "@GMAIL_USER",
+    "GMAIL_APP_PASSWORD": "@GMAIL_APP_PASSWORD",
+    "CRON_SECRET": "@CRON_SECRET"
+  }
 }
