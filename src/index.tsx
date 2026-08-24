@@ -2856,4 +2856,10 @@ app.get('*', (c) => {
 </html>`)
 })
 
+// Affiche l'erreur réelle au lieu d'un 500 muet (utile aussi en prod)
+app.onError((err, c) => {
+  console.error('API Error:', err)
+  return c.json({ error: err instanceof Error ? err.message : String(err) }, err instanceof Error ? 500 : 400)
+})
+
 export default app
